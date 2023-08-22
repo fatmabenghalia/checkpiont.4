@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shopping Cart</title>
+<link rel="stylesheet" href="slyle.css">
+</head>
+<body>
+  <h1>Shopping Cart</h1>
+  <div id="cart">
+    <div class="cart-item">
+      <div>
+        <button class="like-button">🤍</button>
+        <img src="png/m350-sand-gallery-1.png">
+        Mouse
+      </div>
+      <div>
+        <p class="price" id="price-A">$29</p>
+        <button class="remove">-</button>
+        <span>1</span>
+        <button class="add">+</button>
+        <button class="delete">Delete</button>
+      </div>
+    </div>
+    <div class="cart-item">
+      <div>
+        <button class="like-button">🤍</button>
+        <img src="png/Data-Cable-PNG-Pic.png">
+        Charging cable
+      </div>
+      <div>
+        <p class="price" id="price-B">$12</p>
+        <button class="remove">-</button>
+        <span>1</span>
+        <button class="add">+</button>
+        <button class="delete">Delete</button>
+      </div>
+    </div>
+    <div class="cart-item">
+      <div>
+        <button class="like-button">🤍</button>
+        <img src="png/WH1000XM4S.png" alt="Item C">
+        Headphones
+      </div>
+      <div>
+        <p class="price" id="price-C">$399</p>
+        <button class="remove">-</button>
+        <span>1</span>
+        <button class="add">+</button>
+        <button class="delete">delete</button>
+      </div>
+    </div>
+    <div id="buttons">
+      <!-- "Continue Shopping" and "Make Purchase" buttons -->
+      <button id="continueShoppingButton">Continue Shopping</button>
+      <button id="makePurchaseButton">Make Purchase</button>
+    </div>
+  </div>
+  <div id="totalPriceText">
+    <h3>Total Price: $<span id="totalPrice">0</span></h3>
+  </div>
+
+  <script>
+  // This event listener ensures that the JavaScript code runs
+  // after the DOM (HTML) has been fully loaded.
+  document.addEventListener("DOMContentLoaded", function () {
+    // Select all the buttons and elements needed for interactions.
+    const likeButtons = document.querySelectorAll(".like-button");
+    const addButtons = document.querySelectorAll(".add");
+    const removeButtons = document.querySelectorAll(".remove");
+    const deleteButtons = document.querySelectorAll(".delete");
+    const quantitySpans = document.querySelectorAll("span");
+    const priceSpans = document.querySelectorAll(".price");
+    const totalPriceSpan = document.getElementById("totalPrice");
+    const continueShoppingButton = document.getElementById("continueShoppingButton");
+    const makePurchaseButton = document.getElementById("makePurchaseButton");
+
+    // Initialize a variable to track the total price.
+    let totalPrice = 0;
+
+    // Add click event listeners to the like buttons.
+    likeButtons.forEach(function (button) {
+      button.addEventListener("click", function () {
+        if (button.textContent === "🤍") {
+          button.textContent = "❤️"; // Change to ❤️ when clicked
+        } else {
+          button.textContent = "🤍"; // Change back to 🤍 when clicked again
+        }
+      });
+    });
+
+    // Add click event listeners to the add buttons.
+    addButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        // Increase the quantity when the "Add" button is clicked.
+        const quantity = parseInt(quantitySpans[index].textContent);
+        quantitySpans[index].textContent = quantity + 1;
+        // Update the total price.
+        updateTotalPrice();
+      });
+    });
+
+    // Add click event listeners to the remove buttons.
+    removeButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        // Decrease the quantity when the "Remove" button is clicked,
+        // but only if the quantity is greater than 1.
+        const quantity = parseInt(quantitySpans[index].textContent);
+        if (quantity > 1) {
+          quantitySpans[index].textContent = quantity - 1;
+          // Update the total price.
+          updateTotalPrice();
+        }
+      });
+    });
+
+    // Add click event listeners to the delete buttons.
+    deleteButtons.forEach(function (button, index) {
+      button.addEventListener("click", function () {
+        // Set the quantity to 0 when the "Delete" button is clicked.
+        quantitySpans[index].textContent = 0;
+        // Update the total price.
+        updateTotalPrice();
+      });
+    });
+
+    // Update the total price based on the quantities and prices of items.
+    function updateTotalPrice() {
+      totalPrice = 0;
+      priceSpans.forEach(function (priceSpan, index) {
+        const price = parseFloat(priceSpan.textContent.replace("$", ""));
+        const quantity = parseInt(quantitySpans[index].textContent);
+        totalPrice += price * quantity;
+      });
+      // Update the total price displayed on the page.
+      totalPriceSpan.textContent = totalPrice.toFixed(2);
+    }
+  });
+
+    // Add event listeners to the buttons
+    continueShoppingButton.addEventListener("click", function () {
+  });
+
+  makePurchaseButton.addEventListener("click", function () {
+    alert("Item(s) Purchased!");
+  });
+  </script>
+</body>
+</html>
